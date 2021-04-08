@@ -1,7 +1,20 @@
 import React from 'react';
 import ToDoList from './components/TodoList';
 import ToDoForm from './components/TodoForm';
-import './styles.scss';
+import './components/Todo.css';
+
+const toDoItems = [
+  {
+    task: 'Organize Garage',
+    id: 1528817077286,
+    completed: false,
+  },
+  {
+    task: 'Bake Cookies',
+    id: 1528817084358,
+    completed: false,
+  },
+];
 
 class App extends React.Component {
   // you will need a place to store your state in this component.
@@ -11,6 +24,7 @@ class App extends React.Component {
     super();
     this.state = {
       toDoItems: toDoItems,
+      otherVar: 'something',
     };
   }
 
@@ -19,11 +33,16 @@ class App extends React.Component {
     console.log('Toggling item', itemId);
     //map over the to-do array
     // When we find the item clicked, toggle its completed flag
-    const updatedtoDos = this.state.toDoItems.map((item) => {
+    const updatedtoDoItems = this.state.toDoItems.map((item) => {
       if (itemId === item.id) {
         return { ...item, completed: !item.completed };
       }
       return item;
+    });
+    console.log('updated array', updatedtoDoItems);
+    this.setState({
+      ...this.state,
+      toDoItems: updatedtoDoItems,
     });
   };
 
@@ -59,7 +78,7 @@ class App extends React.Component {
     return (
       <div className='App'>
         <div className='header'>
-          <h1>Shopping List</h1>
+          <h1>To-Do List</h1>
           <ToDoForm addItem={this.addItem} />
         </div>
         <ToDoList
